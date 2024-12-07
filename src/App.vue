@@ -1,30 +1,70 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <a-comment
+    author="Socrates"
+    avatar="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/3ee5f13fb09879ecb5185e440cef6eb9.png~tplv-uwbnlip3yd-webp.webp"
+    content="Comment body content."
+    datetime="1 hour"
+  >
+    <template #actions>
+      <span class="action"> <IconMessage /> Reply </span>
+    </template>
+    <a-comment
+      author="Balzac"
+      avatar="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/9eeb1800d9b78349b24682c3518ac4a3.png~tplv-uwbnlip3yd-webp.webp"
+      content="Comment body content."
+      datetime="1 hour"
+    >
+      <template #actions>
+        <span class="action"> <IconMessage /> Reply </span>
+      </template>
+      <a-comment
+        author="Austen"
+        avatar="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/8361eeb82904210b4f55fab888fe8416.png~tplv-uwbnlip3yd-webp.webp"
+        content="Reply content"
+        datetime="1 hour"
+      >
+        <template #actions>
+          <span class="action"> <IconMessage /> Reply </span>
+        </template>
+      </a-comment>
+      <a-comment
+        author="Plato"
+        avatar="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/3ee5f13fb09879ecb5185e440cef6eb9.png~tplv-uwbnlip3yd-webp.webp"
+        content="Reply content"
+        datetime="1 hour"
+      >
+        <template #actions>
+          <span class="action"> <IconMessage /> Reply </span>
+        </template>
+      </a-comment>
+    </a-comment>
+  </a-comment>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import { IconMessage } from "@arco-design/web-vue/es/icon";
+
+export default {
+  components: {
+    IconMessage,
+  },
+};
+</script>
+
+<style scoped>
+.action {
+  display: inline-block;
+  padding: 0 4px;
+  color: var(--color-text-1);
+  line-height: 24px;
+  background: transparent;
+  border-radius: 2px;
+
+  cursor: pointer;
+  transition: all 0.1s ease;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.action:hover {
+  background: var(--color-fill-3);
 }
 </style>
