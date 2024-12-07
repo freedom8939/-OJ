@@ -49,10 +49,12 @@ const selectedKeys = ref(["/"]); //默认是主页
 const visibleRoutes = computed(() => {
   return routes.filter((item, index) => {
     if (item.meta?.hideInMenu) {
+      //手动隐藏
       return false;
     }
     // 根据权限过滤菜单
     if (
+      //如果没有特定权限不可访问界面
       !checkAccess(store.state.user.loginUser, item?.meta?.access as string)
     ) {
       return false;

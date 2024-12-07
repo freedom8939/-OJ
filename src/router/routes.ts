@@ -19,6 +19,15 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/noAuth",
     name: "无权限访问",
     component: () => import("../views/NoAuthView.vue"),
+    meta: {
+      hideInMenu: true,
+    },
+  },
+  {
+    path: "/about",
+    name: "关于我的",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
   {
     path: "/admin",
@@ -27,11 +36,5 @@ export const routes: Array<RouteRecordRaw> = [
     meta: {
       access: AccessEnum.ADMIN,
     },
-  },
-  {
-    path: "/about",
-    name: "关于我的",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
 ];
