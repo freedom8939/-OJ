@@ -73,7 +73,7 @@ const doMenuClick = (key: string) => {
 
 setTimeout(() => {
   store.dispatch("user/getLoginUser", {
-    userName: "蓝书签管理员",
+    userName: "管理员",
     userRole: AccessEnum.ADMIN,
   });
 }, 3000);
