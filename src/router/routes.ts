@@ -13,6 +13,9 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/user",
     name: "用户",
+    meta: {
+      hideInMenu: true,
+    },
     component: UserLayout,
     children: [
       {
