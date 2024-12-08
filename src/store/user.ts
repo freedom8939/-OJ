@@ -12,7 +12,7 @@ export default {
   namespaced: true,
   state: () => ({
     loginUser: {
-      userName: "未登录",
+      userName: "NO_LOGIN",
     },
   }),
   actions: {
