@@ -29,8 +29,10 @@
         <div>
           <a-checkbox>记住账号</a-checkbox>
         </div>
-        <a href="" class="forget_pass">忘记密码</a></a-space
-      >
+        <div>
+          <a href="" @click="goto_register" class="forget_pass">注册账号</a>
+        </div>
+      </a-space>
       <a-form-item>
         <a-button class="submit" html-type="submit" type="primary"
           >登录
@@ -63,6 +65,12 @@ const form = reactive({
   userAccount: "",
   userPassword: "",
 } as UserLoginRequest);
+
+const goto_register = () => {
+  router.push({
+    path: "/user/register",
+  });
+};
 
 //提交表单
 const handleSubmit = async () => {
@@ -102,7 +110,7 @@ a {
 .submit {
   width: 350px;
   height: 40px;
-  margin: 0 auto;
+  margin: 20px auto 0;
 }
 
 #UserLoginView {
@@ -118,8 +126,9 @@ a {
 }
 
 .copyright {
-  position: relative;
-  top: 190px;
+  position: absolute;
+  bottom: 30px;
+  left: 15px;
   color: #beb4b2;
   font-size: 15px;
 }
