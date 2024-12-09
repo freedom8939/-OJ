@@ -1,23 +1,25 @@
 <template>
   <div id="userLayout">
-    <a-layout style="min-height: 100vh">
+    <a-layout style="min-height: calc(100vh - 60px)">
       <a-layout-header class="header">
-        <a-space>
+        <a-space style="margin-left: 40px">
           <img
             class="logo"
             src="https://github.githubassets.com/favicons/favicon.png"
           />
-          <div>蓝签OJ</div>
+          <div style="font-size: 24px; margin-left: 10px">蓝签OJ</div>
         </a-space>
       </a-layout-header>
+
       <a-layout-content class="content">
         <router-view />
       </a-layout-content>
-      <a-layout-footer class="footer">
-        <a href="https://github.com/freedom8939" target="_blank">
-          蓝书签-OJ判题系统 by 王金园</a
-        >
-      </a-layout-footer>
+
+      <!--      <a-layout-footer class="footer">
+              <a href="https://github.com/freedom8939" target="_blank">
+                蓝书签-OJ判题系统 by 王金园</a
+              >
+            </a-layout-footer>-->
     </a-layout>
   </div>
 </template>
@@ -26,14 +28,14 @@
 
 <style scoped>
 #userLayout {
-  text-align: center;
+  overflow-y: hidden;
   background: url("https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png")
     0% 0% / 100% 100%;
   padding: 32px 0px 24px;
 }
 
 #userLayout .logo {
-  width: 64px;
+  width: 44px;
 }
 
 #userLayout .header {
