@@ -3,6 +3,7 @@
     <div class="content">
       <div>欢迎来到</div>
       <div>蓝签-OJ系统</div>
+      <img class="bc_img" src="@/assets/login-back.svg" alt="" />
     </div>
     <a-form
       label-align="left"
@@ -107,6 +108,13 @@ a {
 #UserLoginView {
   overflow-y: hidden;
   margin: 3% 0 0 1%;
+}
+
+.bc_img {
+  top: 200px;
+  width: 800px;
+  position: absolute;
+  right: 250px;
 }
 
 .copyright {
