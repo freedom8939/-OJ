@@ -4,7 +4,7 @@
 const accessEnum = {
   NOT_LOGIN: "notLogin",
   USER: "user",
-  ADMIN: "canAdmin",
+  ADMIN: "admin",
 };
 
 export default accessEnum;
