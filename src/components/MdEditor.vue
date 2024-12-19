@@ -1,23 +1,31 @@
 <template>
-  <Editor :value="userInput" :plugins="plugins" @change="handleChange" />
+  <Editor :value="value" :plugins="plugins" @change="handleChange" />
 </template>
 
 <script setup lang="ts">
 import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
-import { Editor } from "@bytemd/vue-next";
-import { ref } from "vue";
+import { Editor, Viewer } from "@bytemd/vue-next";
+import { ref, watchEffect, defineEmits } from "vue";
 
 const plugins = [gfm(), highlight()];
 
-const userInput = ref("");
-
-const handleChange = (value: string) => {
-  userInput.value = value;
-  console.log(userInput.value);
+const value = ref("");
+const handleChange = (v: string) => {
+  value.value = v;
 };
-</script>
 
+const emit = defineEmits<{
+  (event: "updateValue", value: string): void;
+}>();
+
+watchEffect(() => {
+  emit("updateValue", value.value);
+});
+</script>
 <style scoped>
-@import "bytemd/dist/index.css";
+/*去除ad信息*/
+.bytemd-toolbar-icon.bytemd-tippy.bytemd-tippy-right:last-child {
+  display: none;
+}
 </style>
