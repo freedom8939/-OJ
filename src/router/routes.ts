@@ -8,7 +8,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "浏览题目",
-    component: () => import("../views/HomeView.vue"),
+    component: () => import("../views/ExampleView.vue"),
   },
   {
     path: "/user",
@@ -33,7 +33,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/hide",
     name: "隐藏页面",
-    component: () => import("../views/HomeView.vue"),
+    component: () => import("../views/ExampleView.vue"),
     meta: {
       hideInMenu: true,
     },

@@ -5,23 +5,19 @@
 <script setup lang="ts">
 import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
-import { Editor, Viewer } from "@bytemd/vue-next";
-import { ref, watchEffect, defineEmits } from "vue";
+import { Editor } from "@bytemd/vue-next";
+import { ref, defineEmits } from "vue";
+
+//自定义事件
+const emit = defineEmits(["update:editor"]);
 
 const plugins = [gfm(), highlight()];
+const value = ref();
 
-const value = ref("");
 const handleChange = (v: string) => {
   value.value = v;
+  emit("update:editor", value); //向上传递
 };
-
-const emit = defineEmits<{
-  (event: "updateValue", value: string): void;
-}>();
-
-watchEffect(() => {
-  emit("updateValue", value.value);
-});
 </script>
 <style scoped>
 /*去除ad信息*/
