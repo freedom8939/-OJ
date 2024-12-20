@@ -89,6 +89,10 @@ const handleSubmit = async () => {
 </script>
 
 <style scoped>
+#UserLoginView {
+  height: 100%;
+}
+
 a {
   text-decoration: none; /* 去掉下划线 */
   color: inherit; /* 使用继承的文本颜色 */
@@ -119,18 +123,17 @@ a {
 }
 
 .bc_img {
-  top: 200px;
-  width: 800px;
   position: absolute;
-  right: 250px;
+  float: right;
+  top: 180px;
+  right: 180px;
+  width: 800px;
 }
 
 .copyright {
-  position: absolute;
-  bottom: 30px;
-  left: 15px;
-  color: #beb4b2;
-  font-size: 15px;
+  position: sticky;
+  color: #7c74ff;
+  top: 100%;
 }
 
 .content {

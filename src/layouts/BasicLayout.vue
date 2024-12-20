@@ -33,7 +33,7 @@ export default {
 }
 
 #basicLayout .content {
-  background: linear-gradient(to left, #bbb, #fff);
+  background: linear-gradient(to left, #fefefe, #fff);
   margin-bottom: 16px;
   padding: 20px;
 }

@@ -76,7 +76,7 @@ setTimeout(() => {
     userName: "管理员",
     userRole: AccessEnum.ADMIN,
   });
-}, 3000);
+}, 2000);
 </script>
 
 <style scoped>

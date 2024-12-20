@@ -2,8 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type BaseResponse_boolean_ = {
-  code?: number;
-  data?: boolean;
-  message?: string;
+export type JudgeCase = {
+  input?: string;
+  output?: string;
 };

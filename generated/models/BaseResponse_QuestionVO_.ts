@@ -2,8 +2,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-export type BaseResponse_boolean_ = {
+import type { QuestionVO } from "./QuestionVO";
+
+export type BaseResponse_QuestionVO_ = {
   code?: number;
-  data?: boolean;
+  data?: QuestionVO;
   message?: string;
 };

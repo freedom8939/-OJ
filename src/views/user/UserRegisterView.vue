@@ -137,11 +137,9 @@ a {
 }
 
 .copyright {
-  position: absolute;
-  bottom: 30px;
-  left: 15px;
+  position: sticky;
   color: #7c74ff;
-  font-size: 15px;
+  top: 100%;
 }
 
 .content {
