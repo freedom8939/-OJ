@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { BaseResponse_boolean_ } from "../models/BaseResponse_boolean_";
 import type { BaseResponse_long_ } from "../models/BaseResponse_long_";
+import type { BaseResponse_Page_Question_ } from "../models/BaseResponse_Page_Question_";
 import type { BaseResponse_Page_QuestionVO_ } from "../models/BaseResponse_Page_QuestionVO_";
 import type { BaseResponse_QuestionVO_ } from "../models/BaseResponse_QuestionVO_";
 import type { DeleteRequest } from "../models/DeleteRequest";
@@ -102,6 +103,28 @@ export class QuestionControllerService {
         403: `Forbidden`,
         404: `Not Found`,
       },
+    });
+  }
+
+  /**
+   * listQuestionByPage
+   * @param questionQueryRequest questionQueryRequest
+   * @returns BaseResponse_Page_Question_ OK
+   * @returns any Created
+   * @throws ApiError
+   */
+  public static listQuestionByPageUsingPost(
+    questionQueryRequest: QuestionQueryRequest
+  ): CancelablePromise<BaseResponse_Page_Question_ | any> {
+    return __request(OpenAPI, {
+      method: "POST",
+      url: "/api/question/list/page",
+      body: questionQueryRequest,
+      errors: {
+        401: `Unauthorized`,
+        403: `Forbidden`,
+        404: `Not Found`
+      }
     });
   }
 

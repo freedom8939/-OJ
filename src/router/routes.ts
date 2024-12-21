@@ -39,6 +39,22 @@ export const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/update/question",
+    name: "修改题目",
+    component: () => import("../views/question/AddQuestionView.vue"),
+    meta: {
+      access: AccessEnum.ADMIN,
+    },
+  },
+  {
+    path: "/manage/question",
+    name: "管理题目",
+    component: () => import("../views/question/ManageQuestionView.vue"),
+    meta: {
+      access: AccessEnum.ADMIN,
+    },
+  },
+  {
     path: "/hide",
     name: "隐藏页面",
     component: () => import("../views/ExampleView.vue"),
