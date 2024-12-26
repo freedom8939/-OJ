@@ -91,6 +91,7 @@ const handleSubmit = async () => {
 <style scoped>
 #UserLoginView {
   height: 100%;
+  position: relative;
 }
 
 a {
@@ -117,17 +118,15 @@ a {
   margin: 20px auto 0;
 }
 
-#UserLoginView {
-  overflow-y: hidden;
-  margin: 3% 0 0 1%;
-}
-
 .bc_img {
-  position: absolute;
-  float: right;
-  top: 180px;
-  right: 180px;
-  width: 800px;
+  position: fixed; /* 固定在视口位置 */
+  top: 10%; /* 距离视口顶部 */
+  right: 5%; /* 距离视口右侧 */
+  width: 40vw; /* 宽度为视口宽度的40% */
+  max-width: 800px; /* 最大宽度800px */
+  min-width: 300px; /* 最小宽度300px */
+  z-index: 999; /* 确保图片在内容后方 */
+  pointer-events: none; /* 防止鼠标事件干扰 */
 }
 
 .copyright {
@@ -143,6 +142,7 @@ a {
   text-align: left;
   clear: both;
   font-size: 30px;
+  position: relative; /* 确保文字内容独立于图片布局 */
 }
 
 .arco-form-item {

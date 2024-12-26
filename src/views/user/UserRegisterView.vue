@@ -100,6 +100,10 @@ const goto_login = () => {
 </script>
 
 <style scoped>
+#UserLoginView {
+  height: 100%;
+  position: relative;
+}
 a {
   text-decoration: none; /* 去掉下划线 */
   color: inherit; /* 使用继承的文本颜色 */
@@ -130,10 +134,14 @@ a {
 }
 
 .bc_img {
-  top: 200px;
-  width: 600px;
-  position: absolute;
-  right: 250px;
+  position: fixed; /* 固定在视口位置 */
+  top: 15%; /* 距离视口顶部 */
+  right: 10%; /* 距离视口右侧 */
+  width: 35vw; /* 宽度为视口宽度的40% */
+  max-width: 800px; /* 最大宽度800px */
+  min-width: 300px; /* 最小宽度300px */
+  z-index: 999; /* 确保图片在内容后方 */
+  pointer-events: none; /* 防止鼠标事件干扰 */
 }
 
 .copyright {
@@ -145,10 +153,11 @@ a {
 .content {
   font-weight: 700;
   margin-bottom: 20px;
-  color: #7c74ff;
+  color: #0782e3;
   text-align: left;
   clear: both;
   font-size: 30px;
+  position: relative; /* 确保文字内容独立于图片布局 */
 }
 
 .arco-form-item {
