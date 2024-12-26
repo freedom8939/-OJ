@@ -9,6 +9,14 @@
         <a-input-tag v-model="searchParams.tags" placeholder="搜索标签" />
       </a-form-item>
 
+      <a-space direction="horizontal" size="large" class="difficult">
+        <a-select :style="{ width: '90px' }" placeholder="难度">
+          <a-option>简单</a-option>
+          <a-option>中等</a-option>
+          <a-option>困难</a-option>
+        </a-select>
+      </a-space>
+
       <a-form-item>
         <a-button type="primary" @click="doSubmit">查询</a-button>
       </a-form-item>
@@ -51,6 +59,12 @@
                 2
               )}% (${record.acceptedNum}/${record.submitNum})`
         }}
+      </template>
+
+      <template #rateDifficulty="{ record }">
+        <a-tag :color="getDifficultyColor(record)">
+          {{ getDifficultyText(record) }}
+        </a-tag>
       </template>
     </a-table>
   </div>
@@ -100,6 +114,29 @@ onMounted(() => {
   loadData();
 });
 
+const getDifficultyColor = (record: any) => {
+  const rate =
+    record.submitNum === 0 ? 0 : (record.acceptedNum / record.submitNum) * 100;
+  if (rate >= 70) {
+    return "green"; // 简单 - 绿色
+  } else if (rate >= 40) {
+    return "#FEB858"; // 中等 - 黄色
+  } else {
+    return "red"; // 难 - 红色
+  }
+};
+
+const getDifficultyText = (record: any) => {
+  const rate =
+    record.submitNum === 0 ? 0 : (record.acceptedNum / record.submitNum) * 100;
+  if (rate >= 70) {
+    return "简单";
+  } else if (rate >= 40) {
+    return "中等";
+  } else {
+    return "困难";
+  }
+};
 const columns = [
   {
     title: "题号",
@@ -122,6 +159,12 @@ const columns = [
     title: "标签",
     dataIndex: "tags",
     slotName: "tags",
+    width: 150,
+  },
+  {
+    title: "难度",
+    dataIndex: "hard",
+    slotName: "rateDifficulty",
     width: 150,
   },
   {
@@ -158,5 +201,9 @@ const doSubmit = async () => {
 #questionsView {
   max-width: 1280px;
   margin: 0 auto;
+}
+
+.difficult {
+  display: inline-block;
 }
 </style>

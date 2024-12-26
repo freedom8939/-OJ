@@ -90,11 +90,13 @@ const columns = [
   {
     title: "答案",
     dataIndex: "answer",
-    width: 300,
+    ellipsis: true,
+    width: 90,
   },
   {
     title: "提交数",
     dataIndex: "submitNum",
+    width: 140,
   },
   {
     title: "通过数",
@@ -103,10 +105,14 @@ const columns = [
   {
     title: "判题配置",
     dataIndex: "judgeConfig",
+    ellipsis: true,
+    width: 240,
   },
   {
     title: "判题用例",
     dataIndex: "judgeCase",
+    ellipsis: true,
+    width: 20,
   },
   {
     title: "用户id",
