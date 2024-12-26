@@ -1,6 +1,6 @@
 <template>
   <div id="addQuestionView">
-    <a-form :model="form" label-align="left">
+    <a-form :model="form" label-align="right">
       <a-form-item field="title" label="标题">
         <a-input v-model="form.title" placeholder="请输入标题" />
       </a-form-item>
@@ -228,5 +228,7 @@ const onAnswerChange = (value: string) => {
 
 <style scoped>
 #addQuestionView {
+  max-width: 1280px;
+  margin: 0 auto;
 }
 </style>

@@ -3,12 +3,21 @@ import AccessEnum from "@/access/accessEnum";
 import UserLayout from "@/layouts/UserLayout.vue";
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
+import QuestionsView from "@/views/question/QuestionsView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
+    name: "主页",
+    component: QuestionsView,
+    meta: {
+      hideInMenu: true,
+    },
+  },
+  {
+    path: "/questions",
     name: "浏览题目",
-    component: () => import("../views/ExampleView.vue"),
+    component: QuestionsView,
   },
   {
     path: "/user",
