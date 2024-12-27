@@ -2,8 +2,8 @@
   <Editor
     :value="value"
     :plugins="plugins"
-    mode="split"
     @change="handleChange"
+    mode="split"
   />
 </template>
 

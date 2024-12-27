@@ -80,7 +80,8 @@ const columns = [
   {
     title: "内容",
     dataIndex: "content",
-    width: 150,
+    ellipsis: true,
+    width: 240,
   },
   {
     title: "标签",

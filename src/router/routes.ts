@@ -40,6 +40,17 @@ export const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/view/question/:id",
+    name: "在线做题",
+    component: () => import("../views/question/ViewQuestionsView.vue"),
+    //动态的变量以属性的方式拿到
+    props: true,
+    meta: {
+      access: AccessEnum.USER,
+      hideInMenu: true,
+    },
+  },
+  {
     path: "/add/question",
     name: "创建题目",
     component: () => import("../views/question/AddQuestionView.vue"),

@@ -1,5 +1,9 @@
 <template>
-  <div id="code-editor" ref="codeEditorRef"></div>
+  <div
+    id="code-editor"
+    ref="codeEditorRef"
+    style="min-height: 60vh; height: 600px"
+  ></div>
 </template>
 
 <script setup lang="ts">
@@ -27,10 +31,10 @@ onMounted(() => {
     automaticLayout: true,
     colorDecorators: true,
     minimap: {
-      enabled: true,
+      enabled: false,
     },
     readOnly: false,
-    theme: "vs-light",
+    theme: "vs-dark",
     // lineNumbers: "off",
     // roundedSelection: false,
     // scrollBeyondLastLine: false,
