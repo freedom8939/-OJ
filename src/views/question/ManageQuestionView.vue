@@ -19,6 +19,27 @@
           <a-button status="danger" @click="doDelete(record)">删除</a-button>
         </a-space>
       </template>
+
+      <template #tags="{ record }">
+        <a-space wrap>
+          <a-tag v-for="(tag, index) of record.tags" :key="index" color="green">
+            {{ tag }}
+          </a-tag>
+        </a-space>
+      </template>
+
+      <template #judgeSlot="{ record }">
+        <a-space wrap>
+          <span> 内存限制：{{ record.judgeConfig.memoryLimit }} </span>
+          <span> 时间限制：{{ record.judgeConfig.timeLimit }}</span>
+          <span> 堆栈限制：{{ record.judgeConfig.stackLimit }} </span>
+        </a-space>
+      </template>
+      <template #createTimeSlot="{ record }">
+        <a-space wrap>
+          {{ moment(record.createTime).format("YYYY年MM月DD日") }}
+        </a-space>
+      </template>
     </a-table>
   </div>
 </template>
@@ -28,6 +49,7 @@ import { onMounted, ref, watchEffect } from "vue";
 import { Question, QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
 import { useRouter } from "vue-router";
+import moment from "moment";
 
 const tableRef = ref();
 
@@ -43,7 +65,13 @@ const loadData = async () => {
     searchParams.value
   );
   if (res.code === 0) {
-    dataList.value = res.data.records;
+    const temp = res.data.records;
+    for (let i = 0; i < temp.length; i++) {
+      temp[i].tags = JSON.parse(temp[i].tags);
+      temp[i].judgeConfig = JSON.parse(temp[i].judgeConfig);
+    }
+    console.log(temp);
+    dataList.value = temp;
     total.value = res.data.total;
   } else {
     message.error("加载失败，" + res.message);
@@ -86,7 +114,8 @@ const columns = [
   {
     title: "标签",
     dataIndex: "tags",
-    width: 150,
+    width: 200,
+    slotName: "tags",
   },
   {
     title: "答案",
@@ -106,8 +135,8 @@ const columns = [
   {
     title: "判题配置",
     dataIndex: "judgeConfig",
-    ellipsis: true,
-    width: 240,
+    slotName: "judgeSlot",
+    width: 160,
   },
   {
     title: "判题用例",
@@ -118,10 +147,12 @@ const columns = [
   {
     title: "用户id",
     dataIndex: "userId",
+    ellipsis: true,
   },
   {
     title: "创建时间",
     dataIndex: "createTime",
+    slotName: "createTimeSlot",
   },
   {
     title: "操作",
