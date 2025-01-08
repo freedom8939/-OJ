@@ -1,29 +1,10 @@
-# frontend
+# 蓝签OJ
 
-## Project setup
+## 项目介绍：
 
-```
-npm install
-```
+基于Spring Boot+Spring Cloud微服务+Docker(+Vue3+Arco Design)的编程题目在线评测系统。
 
-### Compiles and hot-reloads for development
+在系统前台，管理员可以创建、管理题目；用户可以自由搜索题目、阅读题目、编写并提交代码。
 
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+在系统后端，能够根据管理员设定的题目测试，用例在自主实现的代码沙箱中对代码进行编译、运行、判
+断输出是否正确。

@@ -8,11 +8,27 @@
 
 <script setup lang="ts">
 import * as monaco from "monaco-editor";
-import { defineEmits, onMounted, ref, toRaw } from "vue";
+import {
+  defineEmits,
+  onMounted,
+  ref,
+  toRaw,
+  withDefaults,
+  defineProps,
+  watchEffect,
+} from "vue";
 
 const codeEditorRef = ref(); //dom元素
 const codeEditor = ref(); //代码
 const emit = defineEmits(["update:codeUpdate"]);
+
+interface Props {
+  language: string;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  language: "java",
+});
 
 onMounted(() => {
   if (!codeEditorRef.value) {

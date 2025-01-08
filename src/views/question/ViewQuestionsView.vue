@@ -41,8 +41,23 @@
           </a-tabs>
         </a-space>
       </a-col>
+
       <a-col :md="12" :xs="24">
-        <CodeEditor />
+        <!-- 添加语言选择框 -->
+        <div class="language-selector">
+          <span> 选择语言</span>
+          <a-select
+            v-model="form.language"
+            :style="{ width: '120px' }"
+            placeholder="选择语言"
+          >
+            <a-option>Java</a-option>
+            <a-option>C++</a-option>
+            <a-option>golang</a-option>
+          </a-select>
+        </div>
+        <!-- 代码编辑器 -->
+        <CodeEditor :language="form.language" />
         <a-button @click="doSubmit" type="primary" class="run">运行</a-button>
       </a-col>
     </a-row>
@@ -50,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, onMounted, ref, withDefaults } from "vue";
+import { defineProps, onMounted, ref, toRaw, withDefaults } from "vue";
 import {
   QuestionControllerService,
   QuestionSubmitAddRequest,
@@ -90,18 +105,20 @@ onMounted(() => {
 });
 
 const form = ref<QuestionSubmitAddRequest>({
-  language: "java",
+  language: "java", // 默认语言
   code: "",
 });
+
 const doSubmit = async () => {
-  const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost(
-    form.value
-  );
-  if (res.code === 0) {
-    message.success("提交成功");
-  } else {
-    message.error("提交失败" + res.message);
-  }
+  console.log(form.value);
+  /* const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost(
+     form.value
+   );
+   if (res.code === 0) {
+     message.success("提交成功");
+   } else {
+     message.error("提交失败" + res.message);
+   }*/
 };
 </script>
 
@@ -109,10 +126,22 @@ const doSubmit = async () => {
 #ViewQuestionView {
   max-width: 1280px;
   margin: 0 auto;
+  background-color: #ffffff; /* 设置白色背景 */
+  border-radius: 12px; /* 添加圆角 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* 添加轻微阴影 */
+  padding: 20px; /* 增加内边距 */
+  border: 1px solid #e0e0e0; /* 可选：添加边框 */
 }
 
 #ViewQuestionView .arco-space-item {
   margin-bottom: 0 !important;
+}
+
+.language-selector {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .run {

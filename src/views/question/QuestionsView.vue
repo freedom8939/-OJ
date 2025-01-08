@@ -103,7 +103,6 @@ const loadData = async () => {
  * 监听 searchParams 变量，改变时触发页面的重新加载
  */
 watchEffect(() => {
-  console.log("响应式变量改变");
   loadData();
 });
 
