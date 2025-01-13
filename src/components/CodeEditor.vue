@@ -2,6 +2,7 @@
   <div
     id="code-editor"
     ref="codeEditorRef"
+    :value="value"
     style="min-height: 60vh; height: 600px"
   ></div>
 </template>
@@ -16,6 +17,7 @@ import {
   withDefaults,
   defineProps,
   watchEffect,
+  watch,
 } from "vue";
 
 const codeEditorRef = ref(); //dom元素
@@ -29,6 +31,18 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   language: "java",
 });
+
+watch(
+  () => props.language,
+  () => {
+    if (codeEditor.value) {
+      monaco.editor.setModelLanguage(
+        toRaw(codeEditor.value).getModel(),
+        props.language
+      );
+    }
+  }
+);
 
 onMounted(() => {
   if (!codeEditorRef.value) {
@@ -55,7 +69,8 @@ onMounted(() => {
     // roundedSelection: false,
     // scrollBeyondLastLine: false,
   });
-
+  //初始化
+  emit("update:codeUpdate", toRaw(codeEditor.value).getValue()); //向上传递
   codeEditor.value.onDidChangeModelContent(() => {
     // console.log("目前内容为：", toRaw(codeEditor.value).getValue());
     emit("update:codeUpdate", toRaw(codeEditor.value).getValue()); //向上传递

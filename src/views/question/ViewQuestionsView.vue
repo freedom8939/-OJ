@@ -51,13 +51,14 @@
             :style="{ width: '120px' }"
             placeholder="选择语言"
           >
-            <a-option>Java</a-option>
-            <a-option>C++</a-option>
-            <a-option>golang</a-option>
+            <a-option>java</a-option>
+            <a-option>cpp</a-option>
+            <a-option>go</a-option>
+            <a-option>html</a-option>
           </a-select>
         </div>
         <!-- 代码编辑器 -->
-        <CodeEditor :language="form.language" />
+        <CodeEditor @update:code-update="getCode" :language="form.language" />
         <a-button @click="doSubmit" type="primary" class="run">运行</a-button>
       </a-col>
     </a-row>
@@ -75,6 +76,13 @@ import {
 import message from "@arco-design/web-vue/es/message";
 import MdViewer from "@/components/MdViewer.vue";
 import CodeEditor from "@/components/CodeEditor.vue";
+import { useRoute } from "vue-router";
+
+const form = ref<QuestionSubmitAddRequest>({
+  language: "java", // 默认语言
+  code: "",
+  questionId: 0,
+});
 
 const question = ref<QuestionVO>();
 
@@ -82,6 +90,9 @@ interface Props {
   id: string;
 }
 
+const getCode = (v: string) => {
+  form.value.code = v;
+};
 const props = withDefaults(defineProps<Props>(), {
   id: "",
 });
@@ -103,22 +114,20 @@ const loadData = async () => {
 onMounted(() => {
   loadData();
 });
-
-const form = ref<QuestionSubmitAddRequest>({
-  language: "java", // 默认语言
-  code: "",
-});
-
+const route = useRoute();
 const doSubmit = async () => {
-  console.log(form.value);
-  /* const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost(
-     form.value
-   );
-   if (res.code === 0) {
-     message.success("提交成功");
-   } else {
-     message.error("提交失败" + res.message);
-   }*/
+  if (!question.value?.id) {
+    return;
+  }
+  const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost({
+    ...form.value,
+    questionId: question.value.id,
+  });
+  if (res.code === 0) {
+    message.success("提交成功");
+  } else {
+    message.error("提交失败" + res.message);
+  }
 };
 </script>
 
