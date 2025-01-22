@@ -7,7 +7,7 @@ router.beforeEach(async (to, from, next) => {
   // console.log("登陆用户信息", store.state.user.loginUser);
   let loginUser = store.state.user.loginUser;
   //如果现在已经登录并且要访问登陆界面 直接让他回到主页
-  if (loginUser && to.path === "/user/login") {
+  if (loginUser.userName !== "NO_LOGIN" && to.path === "/user/login") {
     next("/");
   }
   // // 如果之前没登陆过，自动登录
