@@ -3,22 +3,22 @@
     <div class="content">
       <div>欢迎来到</div>
       <div>蓝签-OJ系统</div>
-      <img class="bc_img" src="@/assets/login-back.svg" alt="" />
+      <img alt="" class="bc_img" src="@/assets/login-back.svg" />
     </div>
     <a-form
-      label-align="left"
       :model="form"
+      auto-label-width
+      label-align="left"
       style="max-width: 380px"
       @submit="handleSubmit"
-      auto-label-width
     >
       <a-form-item field="userAccount" label="用户账号">
         <a-input v-model="form.userAccount" placeholder="请输入账号..." />
       </a-form-item>
       <a-form-item
         field="userPassword"
-        tooltip="密码不小于八位"
         label="请输入密码"
+        tooltip="密码不小于八位"
       >
         <a-input-password
           v-model="form.userPassword"
@@ -30,7 +30,7 @@
           <a-checkbox>记住账号</a-checkbox>
         </div>
         <div>
-          <a href="" @click="goto_register" class="forget_pass">注册账号</a>
+          <a class="forget_pass" href="" @click="goto_register">注册账号</a>
         </div>
       </a-space>
       <a-form-item>
@@ -51,7 +51,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { reactive } from "vue";
 import { UserControllerService, UserLoginRequest } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";

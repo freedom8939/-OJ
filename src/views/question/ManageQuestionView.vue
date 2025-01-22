@@ -2,9 +2,9 @@
   <div id="manageQuestionView">
     <a-table
       :ref="tableRef"
+      :bordered="{ wrapper: true }"
       :columns="columns"
       :data="dataList"
-      :bordered="{ wrapper: true }"
       :pagination="{
         showTotal: true,
         pageSize: searchParams.pageSize,
@@ -44,7 +44,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref, watchEffect } from "vue";
 import { Question, QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <a-row id="globalHeader" align="center" :wrap="false">
+    <a-row id="globalHeader" :wrap="false" align="center">
       <a-col flex="auto">
         <a-menu
-          mode="horizontal"
           :selected-keys="selectedKeys"
+          mode="horizontal"
           @menu-item-click="doMenuClick"
         >
           <a-menu-item
@@ -14,9 +14,9 @@
           >
             <div class="title-bar">
               <img
+                alt="OJ"
                 class="logo"
                 src="https://github.githubassets.com/favicons/favicon.png"
-                alt="OJ"
               />
               <div class="title">蓝签OJ</div>
             </div>

@@ -7,17 +7,16 @@
   ></div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import * as monaco from "monaco-editor";
 import {
   defineEmits,
+  defineProps,
   onMounted,
   ref,
   toRaw,
-  withDefaults,
-  defineProps,
-  watchEffect,
   watch,
+  withDefaults,
 } from "vue";
 
 const codeEditorRef = ref(); //dom元素

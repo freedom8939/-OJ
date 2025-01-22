@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import MdEditor from "@/components/MdEditor.vue";
 import { ref } from "vue";
 

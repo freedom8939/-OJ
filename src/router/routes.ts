@@ -46,7 +46,6 @@ export const routes: Array<RouteRecordRaw> = [
     //动态的变量以属性的方式拿到
     props: true,
     meta: {
-      access: AccessEnum.USER,
       hideInMenu: true,
     },
   },

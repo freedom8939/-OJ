@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import CodeEditor from "@/components/CodeEditor.vue";
 import { ref } from "vue";
 

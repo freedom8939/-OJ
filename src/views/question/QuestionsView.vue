@@ -9,7 +9,7 @@
         <a-input-tag v-model="searchParams.tags" placeholder="搜索标签" />
       </a-form-item>
 
-      <a-space direction="horizontal" size="large" class="difficult">
+      <a-space class="difficult" direction="horizontal" size="large">
         <a-select :style="{ width: '90px' }" placeholder="难度">
           <a-option>简单</a-option>
           <a-option>中等</a-option>
@@ -24,9 +24,9 @@
     <a-divider size="0" />
     <a-table
       :ref="tableRef"
+      :bordered="{ wrapper: true }"
       :columns="columns"
       :data="dataList"
-      :bordered="{ wrapper: true }"
       :pagination="{
         showTotal: true,
         pageSize: searchParams.pageSize,
@@ -70,7 +70,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { onMounted, ref, watchEffect } from "vue";
 import { Question, QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";

@@ -3,14 +3,14 @@
     <div class="content">
       <div>欢迎注册</div>
       <div>蓝签-OJ系统</div>
-      <img class="bc_img" src="@/assets/register.svg" alt="" />
+      <img alt="" class="bc_img" src="@/assets/register.svg" />
     </div>
     <a-form
-      label-align="left"
       :model="form"
+      auto-label-width
+      label-align="left"
       style="max-width: 380px"
       @submit="handleSubmit"
-      auto-label-width
     >
       <a-form-item field="userAccount" label="用户账号">
         <a-input v-model="form.userAccount" placeholder="请输入账号..." />
@@ -18,8 +18,8 @@
 
       <a-form-item
         field="userPassword"
-        tooltip="密码不小于八位"
         label="请输入密码"
+        tooltip="密码不小于八位"
       >
         <a-input-password
           v-model="form.userPassword"
@@ -29,8 +29,8 @@
 
       <a-form-item
         field="checkPassword"
-        tooltip="二次输入密码不小于八位"
         label="请确认密码"
+        tooltip="二次输入密码不小于八位"
       >
         <a-input-password
           v-model="form.checkPassword"
@@ -56,7 +56,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { reactive } from "vue";
 import { UserControllerService, UserRegisterRequest } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
@@ -104,6 +104,7 @@ const goto_login = () => {
   height: 100%;
   position: relative;
 }
+
 a {
   text-decoration: none; /* 去掉下划线 */
   color: inherit; /* 使用继承的文本颜色 */

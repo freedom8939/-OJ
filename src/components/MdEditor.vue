@@ -1,13 +1,13 @@
 <template>
   <Editor
-    :value="value"
     :plugins="plugins"
-    @change="handleChange"
+    :value="value"
     mode="split"
+    @change="handleChange"
   />
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import gfm from "@bytemd/plugin-gfm";
 import highlight from "@bytemd/plugin-highlight";
 import { Editor } from "@bytemd/vue-next";

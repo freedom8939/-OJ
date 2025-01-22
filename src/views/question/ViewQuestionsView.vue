@@ -6,8 +6,8 @@
           <a-tabs default-active-key="question" style="min-width: 600px">
             <a-tab-pane key="question" title="题目">
               <a-descriptions
-                title="判题条件"
                 :column="{ xs: 1, md: 3, lg: 4 }"
+                title="判题条件"
               >
                 <a-descriptions-item label="时间限制">
                   {{ question?.judgeConfig.timeLimit ?? 0 }}
@@ -34,10 +34,10 @@
                 </template>
               </a-card>
             </a-tab-pane>
-            <a-tab-pane key="comment" title="评论" disabled>
+            <a-tab-pane key="comment" disabled title="评论">
               评论区
             </a-tab-pane>
-            <a-tab-pane key="answer" title="提示" disabled>提示</a-tab-pane>
+            <a-tab-pane key="answer" disabled title="提示">提示</a-tab-pane>
           </a-tabs>
         </a-space>
       </a-col>
@@ -58,15 +58,15 @@
           </a-select>
         </div>
         <!-- 代码编辑器 -->
-        <CodeEditor @update:code-update="getCode" :language="form.language" />
-        <a-button @click="doSubmit" type="primary" class="run">运行</a-button>
+        <CodeEditor :language="form.language" @update:code-update="getCode" />
+        <a-button class="run" type="primary" @click="doSubmit">运行</a-button>
       </a-col>
     </a-row>
   </div>
 </template>
 
-<script setup lang="ts">
-import { defineProps, onMounted, ref, toRaw, withDefaults } from "vue";
+<script lang="ts" setup>
+import { defineProps, onMounted, ref, withDefaults } from "vue";
 import {
   QuestionControllerService,
   QuestionSubmitAddRequest,
