@@ -52,7 +52,7 @@ onMounted(() => {
       "/*\n\tplease input your code here\n" +
       "\tproject copyright: 王金园 辽宁师范大学 89398368@qq.com" +
       "\t\n*/\n" +
-      "public Main{\n" +
+      "public class Main{\n" +
       "\tpublic static void main(String[] args){\n" +
       "\n" +
       "\t}\n}",

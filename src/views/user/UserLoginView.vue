@@ -90,6 +90,7 @@ const handleSubmit = async () => {
 
 <style scoped>
 #UserLoginView {
+  margin-left: 20px;
   height: 100%;
   position: relative;
 }

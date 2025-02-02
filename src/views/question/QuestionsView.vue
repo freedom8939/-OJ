@@ -110,7 +110,8 @@ watchEffect(() => {
  * 页面加载时，请求数据
  */
 onMounted(() => {
-  loadData();
+  //这里注释是因为 watchEffect自动执行一次（启动时）
+  // loadData();
 });
 
 const getDifficultyColor = (record: any) => {

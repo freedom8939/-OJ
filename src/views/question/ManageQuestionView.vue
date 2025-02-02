@@ -89,7 +89,7 @@ watchEffect(() => {
  * 页面加载时，请求数据
  */
 onMounted(() => {
-  loadData();
+  // loadData();
 });
 
 const columns = [
