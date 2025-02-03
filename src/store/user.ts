@@ -27,10 +27,17 @@ export default {
         });
       }
     },
+    async logout({ commit, state }, payload) {
+      await UserControllerService.userLogoutUsingPost();
+      commit("logout_user");
+    },
   },
   mutations: {
     updateUser(state, payload) {
-      state.loginUser = payload;
+      Object.assign(state.loginUser, payload);
+    },
+    logout_user(state) {
+      state.loginUser.userName = "NO_LOGIN";
     },
   },
 } as StoreOptions<any>;

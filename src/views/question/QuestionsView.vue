@@ -10,7 +10,11 @@
       </a-form-item>
 
       <a-space class="difficult" direction="horizontal" size="large">
-        <a-select :style="{ width: '90px' }" placeholder="难度">
+        <a-select
+          :style="{ width: '90px' }"
+          placeholder="难度"
+          v-model="searchParams.difficult"
+        >
           <a-option>简单</a-option>
           <a-option>中等</a-option>
           <a-option>困难</a-option>
@@ -21,7 +25,7 @@
         <a-button type="primary" @click="doSubmit">查询</a-button>
       </a-form-item>
     </a-form>
-    <a-divider size="0" />
+    <a-divider :size="0" />
     <a-table
       :ref="tableRef"
       :bordered="{ wrapper: true }"
@@ -85,6 +89,7 @@ const searchParams = ref({
   tags: [],
   pageSize: 10,
   current: 1,
+  difficult: "",
 });
 
 const loadData = async () => {

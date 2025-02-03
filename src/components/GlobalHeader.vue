@@ -1,9 +1,10 @@
 <template>
   <div>
     <a-row id="globalHeader" :wrap="false" align="center">
-      <a-col flex="auto">
+      <a-col flex="800px">
         <a-menu
           :selected-keys="selectedKeys"
+          class="logo_and_title"
           mode="horizontal"
           @menu-item-click="doMenuClick"
         >
@@ -26,16 +27,29 @@
           </a-menu-item>
         </a-menu>
       </a-col>
-      <a-col flex="100px">
-        <div
-          v-if="store.state.user.loginUser.userName === 'NO_LOGIN'"
-          @click="doLogin"
-          class="login"
-        >
-          登录
+      <a-col flex="auto">
+        <div v-if="store.state.user.loginUser.userName === 'NO_LOGIN'">
+          <div class="login_or_register">
+            <span class="doLogin" @click="doLogin">登录</span>
+            或
+            <span class="doRegister" @click="doRegister">注册</span>
+          </div>
         </div>
+
         <div v-else class="user-name">
-          {{ store.state.user.loginUser.userName }}
+          <a-popover title="欢迎使用蓝签OJ">
+            <span>{{ store.state.user.loginUser.userName }}</span>
+            <template #content>
+              <div class="logout" @click="accountSetting">
+                <span><icon-settings style="margin-right: 10px" /></span>
+                <span>账号设置</span>
+              </div>
+              <div class="logout" @click="logout">
+                <span><icon-tag style="margin-right: 10px" /></span>
+                <span>退出登录</span>
+              </div>
+            </template>
+          </a-popover>
         </div>
       </a-col>
     </a-row>
@@ -48,7 +62,8 @@ import { useRouter } from "vue-router";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import checkAccess from "@/access/checkAccess";
-import AccessEnum from "@/access/accessEnum";
+import { UserControllerService } from "../../generated";
+import message from "@arco-design/web-vue/es/message";
 
 const router = useRouter();
 
@@ -56,7 +71,17 @@ const store = useStore();
 
 const selectedKeys = ref(["/"]); //默认是主页
 //展示在菜单的路由数组
-
+const logout = async () => {
+  const res = await UserControllerService.userLogoutUsingPost();
+  await store.dispatch("/user/logout");
+  location.reload();
+  message.success("退出成功");
+  //回到主页
+  router.push({
+    path: "/",
+    replace: true,
+  });
+};
 const visibleRoutes = computed(() => {
   return routes.filter((item, index) => {
     if (item.meta?.hideInMenu) {
@@ -81,17 +106,24 @@ router.afterEach((to, from, failure) => {
 const doMenuClick = (key: string) => {
   router.push({ path: key });
 };
-
-setTimeout(() => {
+const accountSetting = () => {
+  alert("开发者暂未开发");
+};
+/*setTimeout(() => {
   store.dispatch("user/getLoginUser", {
     userName: "管理员",
     userRole: AccessEnum.ADMIN,
   });
-}, 2000);
+}, 2000);*/
 
 const doLogin = () => {
   router.push({
     path: "/user/login",
+  });
+};
+const doRegister = () => {
+  router.push({
+    path: "/user/register",
   });
 };
 </script>
@@ -99,44 +131,39 @@ const doLogin = () => {
 <style scoped>
 /* 顶部菜单栏 */
 #globalHeader {
-  background: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  padding: 10px 20px;
-}
-
-/* 登录按钮 */
-.login {
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: 80px;
-  height: 36px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, #ff7eb3, #ff758c);
-  color: white;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  background: white;
   text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.17);
+  padding: 3px 20px;
 }
 
-.login:hover {
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
-  transform: scale(1.05);
+.login_or_register {
+  position: absolute;
+  right: 20px;
+  width: 170px;
+  font-size: 15px;
+  transition: transform 0.3s ease; /* 添加过渡效果 */
 }
 
-/* 头像（如果有的话） */
-.user-avatar {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.doLogin {
+  cursor: pointer;
+  padding: 0 15px;
+  transform: scale(1.2); /* 悬停时放大1.2倍 */
 }
 
-.user-avatar img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 2px solid #ddd;
+.doRegister {
+  cursor: pointer;
+  padding: 0 15px;
+}
+
+.doLogin:hover {
+  color: gray;
+}
+
+.doRegister:hover {
+  color: gray;
 }
 
 /* 标题栏 */
@@ -159,19 +186,24 @@ const doLogin = () => {
 
 /* 登录成功后显示的用户名 */
 .user-name {
-  text-align: center;
-  font-weight: 500;
-  font-size: 18px;
-  color: #444;
-  padding: 8px 16px;
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 18px;
-  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 20px;
+  width: 170px;
+  font-size: 15px;
+  transition: transform 0.3s ease; /* 添加过渡效果 */
 }
 
 /* 悬停时效果 */
 .user-name:hover {
-  background: rgba(0, 0, 0, 0.1);
   transform: scale(1.05);
+}
+
+.logout {
+  cursor: pointer;
+  transform: scale(1.05);
+  margin-top: 10px;
 }
 </style>
