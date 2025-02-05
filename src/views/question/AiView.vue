@@ -5,6 +5,9 @@
     <button @click="startAI" :disabled="loading" class="button">
       {{ loading ? "AI 生成中..." : "开始" }}
     </button>
+    <button @click="stopAI" :disabled="!loading" class="stop-button">
+      停止
+    </button>
     <div class="output">
       <p>{{ responseText }}</p>
     </div>
@@ -15,7 +18,7 @@
 import { ref } from "vue";
 
 const input = ref("");
-const responseText = ref(""); // 让 AI 内容拼接到同一行
+const responseText = ref("");
 const loading = ref(false);
 let eventSource: EventSource | null = null;
 
@@ -30,13 +33,14 @@ const startAI = () => {
   }
 
   eventSource = new EventSource(
-    `http://localhost:8101/api/question/chat?userMessage=${encodeURIComponent(
+    `http://localhost:8101/api/question/connect?message=${encodeURIComponent(
       input.value
     )}`
   );
 
   eventSource.onmessage = (event) => {
-    responseText.value += event.data; // 直接拼接数据到同一行
+    responseText.value += event.data;
+    console.log(responseText.value);
   };
 
   eventSource.onerror = () => {
@@ -44,6 +48,16 @@ const startAI = () => {
     loading.value = false;
     eventSource?.close();
   };
+};
+
+// 手动停止 SSE
+const stopAI = () => {
+  if (eventSource) {
+    eventSource.close();
+    eventSource = null;
+    loading.value = false;
+    console.log("用户主动关闭 SSE 连接");
+  }
 };
 </script>
 
@@ -63,17 +77,31 @@ const startAI = () => {
   margin-bottom: 10px;
 }
 
-.button {
+.button,
+.stop-button {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  margin: 5px;
+}
+
+.button {
+  background-color: #007bff;
 }
 
 .button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.stop-button {
+  background-color: #dc3545;
+}
+
+.stop-button:disabled {
   background-color: #aaa;
   cursor: not-allowed;
 }
@@ -86,6 +114,6 @@ const startAI = () => {
   border-radius: 5px;
   background: #f9f9f9;
   min-height: 50px;
-  white-space: pre-wrap; /* 保持流式拼接的格式 */
+  white-space: pre-wrap;
 }
 </style>
