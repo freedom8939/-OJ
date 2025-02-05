@@ -5,6 +5,7 @@ import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
 import QuestionsView from "@/views/question/QuestionsView.vue";
 import QuestionsSubmitView from "@/views/question/QuestionsSubmitView.vue";
+import AiView from "@/views/question/AiView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -19,6 +20,11 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/questions",
     name: "浏览题目",
     component: QuestionsView,
+  },
+  {
+    path: "/ai",
+    name: "AI问答",
+    component: AiView,
   },
   {
     path: "/user",

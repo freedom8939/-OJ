@@ -19,7 +19,7 @@
                   {{ question?.judgeConfig.stackLimit ?? 0 }}
                 </a-descriptions-item>
               </a-descriptions>
-              <a-card title="question.title">
+              <a-card :title="question?.title">
                 <MdViewer :value="question?.content" />
                 <template #extra>
                   <a-space wrap>
@@ -58,8 +58,11 @@
           </a-select>
         </div>
         <!-- 代码编辑器 -->
-        <CodeEditor :language="form.language" @update:code-update="getCode" />
-        <a-button class="run" type="primary" @click="doSubmit">运行</a-button>
+        <CodeEditor
+          :language="form.language"
+          @update:code-update="getCode"
+          class="codeEditor"
+        />
       </a-col>
     </a-row>
   </div>
@@ -72,10 +75,10 @@ import {
   QuestionSubmitAddRequest,
   QuestionVO,
 } from "../../../generated";
-import message from "@arco-design/web-vue/es/message";
 import MdViewer from "@/components/MdViewer.vue";
 import CodeEditor from "@/components/CodeEditor.vue";
-import { useRoute } from "vue-router";
+import message from "@arco-design/web-vue/es/message";
+import emitter from "@/store/bus/EventBus";
 
 const form = ref<QuestionSubmitAddRequest>({
   language: "java", // 默认语言
@@ -113,8 +116,10 @@ const loadData = async () => {
  */
 onMounted(() => {
   loadData();
+  emitter.on("run_code_message", (msg) => {
+    doSubmit();
+  });
 });
-const route = useRoute();
 const doSubmit = async () => {
   if (!question.value?.id) {
     return;
@@ -133,7 +138,7 @@ const doSubmit = async () => {
 
 <style>
 #ViewQuestionView {
-  max-width: 1280px;
+  max-width: 1920px;
   margin: 0 auto;
   background-color: #ffffff; /* 设置白色背景 */
   border-radius: 12px; /* 添加圆角 */
@@ -151,10 +156,5 @@ const doSubmit = async () => {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.run {
-  margin-top: 25px;
-  min-width: 80px;
 }
 </style>

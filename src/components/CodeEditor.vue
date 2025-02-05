@@ -3,7 +3,7 @@
     id="code-editor"
     ref="codeEditorRef"
     :value="value"
-    style="min-height: 60vh; height: 600px"
+    style="min-height: 81vh; height: 600px"
   ></div>
 </template>
 
@@ -79,6 +79,6 @@ onMounted(() => {
 
 <style scoped>
 #code-editor {
-  min-height: 400px;
+  min-height: 900px;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <Viewer :plugins="plugins" :value="value" />
+  <Viewer :plugins="plugins" :value="value" class="viewer" />
 </template>
 
 <script lang="ts" setup>
@@ -15,5 +15,10 @@ const value = ref();
 /*去除ad信息*/
 .bytemd-toolbar-icon.bytemd-tippy.bytemd-tippy-right:last-child {
   display: none;
+}
+
+.viewer {
+  min-width: 830px;
+  width: 830px;
 }
 </style>

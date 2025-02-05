@@ -2,7 +2,8 @@
   <div id="DoQuestionLayout">
     <a-layout style="min-height: 100vh">
       <a-layout-header class="header">
-        <global-header />
+        <!-- 确保事件名一致 -->
+        <DoQuestionHeader />
       </a-layout-header>
       <a-layout-content class="content">
         <router-view />
@@ -47,13 +48,12 @@
 </template>
 
 <script>
-import GlobalHeader from "@/components/GlobalHeader.vue";
+import DoQuestionHeader from "@/components/DoQuestionHeader.vue";
 
 export default {
-  components: { GlobalHeader },
+  components: { DoQuestionHeader },
 };
 </script>
-
 <style scoped>
 #DoQuestionLayout {
 }
@@ -65,13 +65,14 @@ export default {
 #DoQuestionLayout .content {
   background: linear-gradient(to left, #fefefe, #fff);
   margin-bottom: 16px;
-  padding: 20px;
+  padding: 0 20px;
 }
 
 #DoQuestionLayout .footer {
   background: #2c3e50; /* 深色背景 */
+  max-height: 45px;
   color: #fff; /* 文字颜色 */
-  padding: 24px 16px; /* 增加上下内边距 */
+  padding: 14px 16px; /* 增加上下内边距 */
   text-align: center;
   position: sticky;
   bottom: 0;

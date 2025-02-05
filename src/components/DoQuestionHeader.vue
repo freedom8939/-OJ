@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-row id="doQuestionHeader" :wrap="false" align="center">
-      <a-col flex="800px">
+      <a-col flex="auto">
         <a-menu
           :selected-keys="selectedKeys"
           class="logo_and_title"
@@ -11,7 +11,8 @@
           <a-menu-item
             key="0"
             :style="{ padding: 0, marginRight: '38px' }"
-            disabled
+            class="return_index"
+            @click="returnIndex"
           >
             <div class="title-bar">
               <img
@@ -22,10 +23,13 @@
               <div class="title">蓝签OJ</div>
             </div>
           </a-menu-item>
-          <a-menu-item v-for="item in visibleRoutes" v-bind:key="item.path">
-            {{ item.name }}
-          </a-menu-item>
         </a-menu>
+      </a-col>
+      <a-col flex="auto">
+        <div class="run_code" @click="doSubmit">
+          <span><icon-send style="margin-right: 10px" /></span>
+          <span>运行代码</span>
+        </div>
       </a-col>
       <a-col flex="auto">
         <div v-if="store.state.user.loginUser.userName === 'NO_LOGIN'">
@@ -64,11 +68,10 @@ import { useStore } from "vuex";
 import checkAccess from "@/access/checkAccess";
 import { UserControllerService } from "../../generated";
 import message from "@arco-design/web-vue/es/message";
+import emitter from "@/store/bus/EventBus";
 
 const router = useRouter();
-
 const store = useStore();
-
 const selectedKeys = ref(["/"]); //默认是主页
 //展示在菜单的路由数组
 const logout = async () => {
@@ -126,23 +129,38 @@ const doRegister = () => {
     path: "/user/register",
   });
 };
+const returnIndex = () => {
+  router.push({
+    path: "/",
+  });
+};
+const doSubmit = () => {
+  emitter.emit("run_code_message", "Hello from Component DoQuestionHeader");
+};
 </script>
 
 <style scoped>
 /* 顶部菜单栏 */
 #doQuestionHeader {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
   background: white;
-  text-align: center;
+  padding: 0 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.17);
-  padding: 3px 20px;
+}
+
+.return_index {
+  cursor: pointer;
+  display: block;
+  width: 150px;
 }
 
 .login_or_register {
+  white-space: nowrap;
   position: absolute;
-  right: 20px;
-  width: 170px;
+  float: right;
+  right: 0;
   font-size: 15px;
   transition: transform 0.3s ease; /* 添加过渡效果 */
 }
@@ -186,11 +204,8 @@ const doRegister = () => {
 
 /* 登录成功后显示的用户名 */
 .user-name {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
   right: 20px;
+  float: right;
   width: 170px;
   font-size: 15px;
   transition: transform 0.3s ease; /* 添加过渡效果 */
@@ -199,6 +214,34 @@ const doRegister = () => {
 /* 悬停时效果 */
 .user-name:hover {
   transform: scale(1.05);
+}
+
+.run_code {
+  display: inline-block; /* 让它适用于按钮 */
+  width: 100px;
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #89c1ef, #1890ff); /* 蓝色渐变 */
+  color: white; /* 文字颜色 */
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 8px; /* 圆角 */
+  cursor: pointer; /* 变成可点击 */
+  transition: all 0.3s ease; /* 平滑动画 */
+  box-shadow: 2px 2px 10px rgba(24, 144, 255, 0.4); /* 按钮阴影 */
+}
+
+/* 悬停效果 */
+.run_code:hover {
+  background: linear-gradient(135deg, #1890ff, #157ab3); /* 渐变改深 */
+  box-shadow: 4px 4px 15px rgba(24, 144, 255, 0.6);
+  transform: scale(1.05); /* 轻微放大 */
+}
+
+/* 按下时效果 */
+.run_code:active {
+  transform: scale(0.95);
+  box-shadow: 1px 1px 5px rgba(24, 144, 255, 0.4);
 }
 
 .logout {
