@@ -25,7 +25,7 @@
           </a-menu-item>
         </a-menu>
       </a-col>
-      <a-col flex="auto">
+      <a-col flex="100px">
         <div class="run_code" @click="doSubmit">
           <span><icon-send style="margin-right: 10px" /></span>
           <span>运行代码</span>
@@ -134,7 +134,9 @@ const returnIndex = () => {
     path: "/",
   });
 };
-const doSubmit = () => {
+const doSubmit = (event: Event) => {
+  event.stopPropagation(); // 阻止事件传播
+  event.preventDefault(); // 阻止默认行为
   emitter.emit("run_code_message", "Hello from Component DoQuestionHeader");
 };
 </script>

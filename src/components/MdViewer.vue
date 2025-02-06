@@ -18,7 +18,6 @@ const value = ref();
 }
 
 .viewer {
-  min-width: 830px;
-  width: 830px;
+  min-width: 40px;
 }
 </style>

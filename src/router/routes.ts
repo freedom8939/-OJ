@@ -25,6 +25,10 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/ai",
     name: "AI问答",
     component: AiView,
+    meta: {
+      access: AccessEnum.ADMIN,
+      hideInMenu: true,
+    },
   },
   {
     path: "/user",
