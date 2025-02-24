@@ -25,12 +25,12 @@
           </a-menu-item>
         </a-menu>
       </a-col>
-      <a-col flex="100px">
-        <div class="run_code" @click="doSubmit">
-          <span><icon-send style="margin-right: 10px" /></span>
-          <span>运行代码</span>
-        </div>
-      </a-col>
+      <!--      <a-col flex="auto">
+              <div class="run_code" @click="doSubmit">
+                <span><icon-send style="margin-right: 10px" /></span>
+                <span>运行代码</span>
+              </div>
+            </a-col>-->
       <a-col flex="auto">
         <div v-if="store.state.user.loginUser.userName === 'NO_LOGIN'">
           <div class="login_or_register">
@@ -219,7 +219,6 @@ const doSubmit = (event: Event) => {
 }
 
 .run_code {
-  display: inline-block; /* 让它适用于按钮 */
   width: 100px;
   padding: 10px 15px;
   background: linear-gradient(135deg, #89c1ef, #1890ff); /* 蓝色渐变 */

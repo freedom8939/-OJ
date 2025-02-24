@@ -8,7 +8,8 @@
     <div class="profile">
       <div>
         您好，{{ store.state.user.loginUser.userName }}
-        <br />我是您的代码小助手，您可以问我:
+        <br />
+        <span class="subtitle">我是您的代码小助手，您可以问我：</span>
       </div>
     </div>
 
@@ -42,7 +43,7 @@
       :disabled="!loading"
       class="stop-button"
     >
-      停止
+      停止生成
     </a-button>
 
     <div class="output" v-if="output_loading">
@@ -76,11 +77,13 @@ const aiQuestion = () => {
   const data = prompt + props.question;
   connectAI(data);
 };
+
 const aiCheck = () => {
   const prompt = "请你检查我的代码并指出我代码中的错误";
   const data = prompt + props.code;
   connectAI(data);
 };
+
 const aiPrefer = () => {
   const prompt =
     "请你根据我写的代码以及题目问题，给我一个时间复杂度和空间复杂度更优解的答案";
@@ -104,21 +107,18 @@ const connectAI = (v: string) => {
 
   eventSource.onmessage = (event) => {
     if (event.data.length <= 0) {
-      mdEditor.value += event.data.replace("", "\n"); // 统一使用 \n
+      mdEditor.value += event.data.replace("", "\n");
     }
-    mdEditor.value += event.data; // 统一使用 \n
-    // mdEditor.value += event.data;
+    mdEditor.value += event.data;
   };
 
   eventSource.onerror = () => {
     console.log("SSE 连接已断开");
     loading.value = false;
-    // output_loading.value = false;
     eventSource?.close();
   };
 };
 
-// 手动停止 SSE
 const stopAI = () => {
   if (eventSource) {
     eventSource.close();
@@ -130,74 +130,142 @@ const stopAI = () => {
 
 <style scoped>
 .container {
+  overflow-y: auto;
   min-height: 86vh;
+  max-height: 86vh;
   max-width: 600px;
-  margin: 0 10px;
-  max-height: 80vh; /* 限制最大高度 */
-  overflow-y: auto; /* 允许滚动 */
-}
-
-.profile {
-  font-size: 24px;
-  margin: 15px 1px;
-}
-
-.stop-button {
-  width: 60px;
-  padding: 10px;
-  flex-wrap: nowrap;
-  text-align: center;
-  position: absolute;
-  bottom: 40px;
-  right: 60px;
+  margin: 0 auto;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 .ai_assist {
-  /*圆角边框*/
-  font-size: 24px;
-  border-radius: 8px; /*文本左对齐*/
-  text-align: left; /*宽度设置*/
-  width: 250px; /*内边距*/
-  padding: 10px; /*背景颜色*/
-  background-color: #f3f6f8; /*盒子阴影*/
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /*过渡效果*/
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  color: white;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  transition: transform 0.2s ease;
+}
+
+.ai_assist:hover {
+  transform: translateY(-2px);
+}
+
+.profile {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.profile div {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #374151;
+}
+
+.subtitle {
+  font-size: 14px !important;
+  color: #6b7280 !important;
+  display: block;
+  margin-top: 8px;
 }
 
 .prev_question {
-  padding: 10px;
-  background: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .question-item {
-  margin-top: 10px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px;
-  border-radius: 5px;
-  transition: background 0.3s;
-  justify-content: space-between; /* 让 icon-right 靠右 */
+  justify-content: space-between;
+  padding: 16px;
+  margin: 8px 0;
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
 }
 
 .question-item:hover {
-  background: #e9ecef;
-  margin: 5px 0;
-  cursor: pointer;
+  background: #ffffff;
+  border-color: #6366f1;
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.1);
+  transform: translateX(4px);
+}
+
+.question-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #374151;
+}
+
+.question-content svg {
+  color: #6366f1;
+  width: 20px;
+  height: 20px;
+}
+
+.stop-button {
+  position: sticky;
+  bottom: 20px;
+  margin-top: 24px;
+  background: #ef4444;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  width: 120px;
+  height: 40px;
+}
+
+.stop-button:hover {
+  background: #dc2626;
+  transform: scale(1.05);
 }
 
 .output {
-  font-size: 17px;
-  text-align: left;
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background: #f9f9f9;
-  min-height: 50px;
-  white-space: pre-wrap; /* 保留手动换行 */
-  word-break: break-word; /* 避免长文本溢出 */
-  overflow-wrap: break-word;
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 24px;
+  border: 1px solid #e5e7eb;
+  font-family: "JetBrains Mono", monospace;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 16px;
+    margin: 0 8px;
+  }
+
+  .ai_assist {
+    padding: 12px 16px;
+    font-size: 20px;
+  }
+
+  .profile div {
+    font-size: 16px;
+  }
+
+  .stop-button {
+    width: 100%;
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
 }
 </style>

@@ -4,7 +4,12 @@
       <!-- 第一列：题目 -->
       <a-col :md="8" :xs="24" class="col-box">
         <a-space>
-          <a-tabs default-active-key="question" style="min-width: 600px">
+          <a-tabs
+            @change="onTabsChange"
+            :efault-active-key="question"
+            :active-key="currentPane"
+            style="min-width: 600px"
+          >
             <a-tab-pane key="question" title="题目">
               <a-descriptions
                 :column="{ xs: 1, md: 3, lg: 4 }"
@@ -35,26 +40,36 @@
                 </template>
               </a-card>
             </a-tab-pane>
+            <a-tab-pane key="commit" title="提交">
+              <ViewAnswerView :judge-info="judgeInfo" />
+            </a-tab-pane>
             <a-tab-pane key="comment" disabled title="评论">评论区</a-tab-pane>
             <a-tab-pane key="answer" disabled title="提示">提示</a-tab-pane>
           </a-tabs>
         </a-space>
       </a-col>
-
       <!-- 第二列：代码编辑器 -->
       <a-col :md="9" :span="4" :xs="24" class="col-box" v-resizable>
-        <div class="language-selector">
-          <span>选择语言</span>
-          <a-select
-            v-model="form.language"
-            :style="{ width: '120px' }"
-            placeholder="选择语言"
-          >
-            <a-option>java</a-option>
-            <a-option>cpp</a-option>
-            <a-option>go</a-option>
-            <a-option>html</a-option>
-          </a-select>
+        <div style="display: flex; justify-content: space-between">
+          <div class="language-selector">
+            <span>选择语言</span>
+            <a-select
+              v-model="form.language"
+              :style="{ width: '120px' }"
+              placeholder="选择语言"
+            >
+              <a-option>java</a-option>
+              <a-option>cpp</a-option>
+              <a-option>go</a-option>
+              <a-option>html</a-option>
+            </a-select>
+          </div>
+          <div>
+            <div style="margin-right: 30px" class="run_code" @click="doSubmit">
+              <span><icon-send style="margin-right: 10px" /></span>
+              <span>运行代码</span>
+            </div>
+          </div>
         </div>
         <CodeEditor
           :language="form.language"
@@ -62,7 +77,6 @@
           class="codeEditor"
         />
       </a-col>
-
       <!-- 第三列：AI 视图 -->
       <a-col :md="6" :xs="24" class="col-box" v-resizable>
         <AiView :code="form.code" :question="question?.content" />
@@ -81,17 +95,17 @@ import {
 import MdViewer from "@/components/MdViewer.vue";
 import CodeEditor from "@/components/CodeEditor.vue";
 import message from "@arco-design/web-vue/es/message";
-import emitter from "@/store/bus/EventBus";
 import AiView from "@/views/question/AiView.vue";
+import ViewAnswerView from "@/views/question/ViewAnswerView.vue";
 
 const form = ref<QuestionSubmitAddRequest>({
   language: "java", // 默认语言
   code: "",
   questionId: 0,
 });
-
+const judgeInfo = ref("");
 const question = ref<QuestionVO | undefined>(undefined);
-
+const currentPane = ref("question");
 interface Props {
   id: string;
 }
@@ -118,15 +132,16 @@ const loadData = async () => {
 /**
  * 页面加载时，请求数据
  */
-emitter.on("run_code_message", (msg) => {
+/*emitter.on("run_code_message", (msg) => {
   console.log("提交代码");
   doSubmit();
-});
+});*/
 onMounted(() => {
   loadData();
 });
 
 const doSubmit = async () => {
+  currentPane.value = "commit";
   if (!question.value?.id) {
     return;
   }
@@ -134,11 +149,38 @@ const doSubmit = async () => {
     ...form.value,
     questionId: question.value.id,
   });
+  const questionSubmitId = res.data;
   if (res.code === 0) {
     message.success("提交成功");
+    // 轮询查询判题状态
+    const pollJudgeStatus = async () => {
+      try {
+        const judgeRes = await QuestionControllerService.getByIdUsingPost(
+          questionSubmitId
+        );
+        if (judgeRes.data) {
+          if (judgeRes.data.status === 2) {
+            console.log(judgeRes.data);
+            //传递给提交pane //传递给子组件让子组件渲染
+            judgeInfo.value = judgeRes.data;
+            clearInterval(timer);
+            message.success("判题完成！");
+          }
+        } else {
+          console.warn("查询判题状态失败:", judgeRes.message);
+        }
+      } catch (error) {
+        console.error("请求出错:", error);
+      }
+    };
+    const timer = setInterval(pollJudgeStatus, 1000);
   } else {
     message.error("提交失败" + res.message);
   }
+};
+
+const onTabsChange = (e) => {
+  currentPane.value = e;
 };
 </script>
 
@@ -172,6 +214,19 @@ const doSubmit = async () => {
   gap: 10px;
 }
 
+.run_code {
+  width: 100px;
+  padding: 10px 15px;
+  background: linear-gradient(135deg, #c7c6f3, #5350ed); /* 蓝色渐变 */
+  color: white; /* 文字颜色 */
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 8px; /* 圆角 */
+  cursor: pointer; /* 变成可点击 */
+  transition: all 0.3s ease; /* 平滑动画 */
+  box-shadow: 2px 2px 10px rgba(24, 144, 255, 0.4); /* 按钮阴影 */
+}
 /* 调整 a-row 的 gutter */
 .arco-row {
   margin: 0 -12px; /* 抵消列的外边距 */
