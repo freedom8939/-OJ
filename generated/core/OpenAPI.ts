@@ -20,10 +20,11 @@ export type OpenAPIConfig = {
 };
 
 export const OpenAPI: OpenAPIConfig = {
-  BASE: "http://localhost:8101",
+  BASE: "http://lanshuqian.top:8101",
+  // BASE: "http://localhost:8101",
   VERSION: "1.0",
   WITH_CREDENTIALS: true,
-  CREDENTIALS: "include",
+  CREDENTIALS: "omit",
   TOKEN: undefined,
   USERNAME: undefined,
   PASSWORD: undefined,

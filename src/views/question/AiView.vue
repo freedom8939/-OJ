@@ -100,7 +100,7 @@ const connectAI = (v: string) => {
     eventSource.close();
   }
   eventSource = new EventSource(
-    `http://localhost:8101/api/question/connect?message=${encodeURIComponent(
+    `http://114.116.226.107:8101/api/question/connect?message=${encodeURIComponent(
       v
     )}`
   );

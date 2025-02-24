@@ -68,7 +68,6 @@ import { useStore } from "vuex";
 import checkAccess from "@/access/checkAccess";
 import { UserControllerService } from "../../generated";
 import message from "@arco-design/web-vue/es/message";
-import emitter from "@/store/bus/EventBus";
 
 const router = useRouter();
 const store = useStore();
@@ -133,11 +132,6 @@ const returnIndex = () => {
   router.push({
     path: "/",
   });
-};
-const doSubmit = (event: Event) => {
-  event.stopPropagation(); // 阻止事件传播
-  event.preventDefault(); // 阻止默认行为
-  emitter.emit("run_code_message", "Hello from Component DoQuestionHeader");
 };
 </script>
 

@@ -35,6 +35,7 @@ export default {
   mutations: {
     updateUser(state, payload) {
       Object.assign(state.loginUser, payload);
+      // alert(JSON.stringify(state.loginUser));
     },
     logout_user(state) {
       state.loginUser.userName = "NO_LOGIN";

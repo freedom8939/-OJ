@@ -6,7 +6,7 @@
         <a-space>
           <a-tabs
             @change="onTabsChange"
-            :efault-active-key="question"
+            :default-active-key="question"
             :active-key="currentPane"
             style="min-width: 600px"
           >
@@ -40,7 +40,7 @@
                 </template>
               </a-card>
             </a-tab-pane>
-            <a-tab-pane key="commit" title="提交">
+            <a-tab-pane key="commit" :disabled="disableCommit" title="提交">
               <ViewAnswerView :judge-info="judgeInfo" />
             </a-tab-pane>
             <a-tab-pane key="comment" disabled title="评论">评论区</a-tab-pane>
@@ -48,6 +48,7 @@
           </a-tabs>
         </a-space>
       </a-col>
+
       <!-- 第二列：代码编辑器 -->
       <a-col :md="9" :span="4" :xs="24" class="col-box" v-resizable>
         <div style="display: flex; justify-content: space-between">
@@ -77,6 +78,7 @@
           class="codeEditor"
         />
       </a-col>
+
       <!-- 第三列：AI 视图 -->
       <a-col :md="6" :xs="24" class="col-box" v-resizable>
         <AiView :code="form.code" :question="question?.content" />
@@ -98,6 +100,7 @@ import message from "@arco-design/web-vue/es/message";
 import AiView from "@/views/question/AiView.vue";
 import ViewAnswerView from "@/views/question/ViewAnswerView.vue";
 
+const disableCommit = ref(true);
 const form = ref<QuestionSubmitAddRequest>({
   language: "java", // 默认语言
   code: "",
@@ -129,13 +132,6 @@ const loadData = async () => {
   }
 };
 
-/**
- * 页面加载时，请求数据
- */
-/*emitter.on("run_code_message", (msg) => {
-  console.log("提交代码");
-  doSubmit();
-});*/
 onMounted(() => {
   loadData();
 });
@@ -152,7 +148,7 @@ const doSubmit = async () => {
   const questionSubmitId = res.data;
   if (res.code === 0) {
     message.success("提交成功");
-    // 轮询查询判题状态
+    disableCommit.value = false;
     const pollJudgeStatus = async () => {
       try {
         const judgeRes = await QuestionControllerService.getByIdUsingPost(
@@ -160,8 +156,6 @@ const doSubmit = async () => {
         );
         if (judgeRes.data) {
           if (judgeRes.data.status === 2) {
-            console.log(judgeRes.data);
-            //传递给提交pane //传递给子组件让子组件渲染
             judgeInfo.value = judgeRes.data;
             clearInterval(timer);
             message.success("判题完成！");
@@ -227,7 +221,11 @@ const onTabsChange = (e) => {
   transition: all 0.3s ease; /* 平滑动画 */
   box-shadow: 2px 2px 10px rgba(24, 144, 255, 0.4); /* 按钮阴影 */
 }
-/* 调整 a-row 的 gutter */
+
+.run_code:hover {
+  background: linear-gradient(135deg, #4a46c6, #0e28a6);
+}
+
 .arco-row {
   margin: 0 -12px; /* 抵消列的外边距 */
 }
